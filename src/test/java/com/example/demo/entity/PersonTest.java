@@ -28,4 +28,17 @@ class PersonTest {
         person.setAge(20);
         assertEquals(20,person.getAge());
     }
+
+    @Test
+    void getId() {
+        assertEquals("1",person.getId());
+    }
+
+    @Test
+    void setId() {
+        person.setId("101");
+        assertEquals("101",person.getId());
+    }
+
+    Person person1 =new Person();
 }
