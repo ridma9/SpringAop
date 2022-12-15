@@ -20,8 +20,9 @@ public class PersonService {
         return repo.findAll();
     }
 
-    public void savePerson(Person person){
+    public Person savePerson(Person person){
         repo.save(person);
+        return person;
     }
 
     public boolean deletePerson(String id){

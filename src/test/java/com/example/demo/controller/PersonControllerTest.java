@@ -9,7 +9,10 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -29,24 +32,40 @@ class PersonControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private  PersonRepo repo;
-
-    @MockBean
     private PersonService service;
 
-    List<Person> people = Arrays.asList(new Person("1","John",25));
+    List<Person> people = Arrays.asList(new Person("1","John",25),new Person("2","Cal",20));
 
     @Test
     void getAll() throws Exception {
         Mockito.when(service.getPeople()).thenReturn(people);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/get").accept(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-        String expected = "[{\"id\":\"1\",\"name\":\"John\",\"age\":25}]";
+        String expected = "[{\"id\":\"1\",\"name\":\"John\",\"age\":25},{\"id\":\"2\",\"name\":\"Cal\",\"age\":20}]";
         assertEquals(expected,result.getResponse().getContentAsString());
     }
 
     @Test
-    void addPerson() {
+    void getOnePerson() throws Exception {
+        Person person = people.get(0);
+        Mockito.when(service.getPersonById(Mockito.anyString())).thenReturn(person);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/get/\"1\"").accept(MediaType.APPLICATION_JSON);
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        String expected = "{\"id\":\"1\",\"name\":\"John\",\"age\":25}";
+        assertEquals(expected,result.getResponse().getContentAsString());
+    }
+
+    @Test
+    void addPerson() throws Exception {
+        Person person = new Person("4","Max",30);
+        String mockPerson = "{\"id\":\"4\",\"name\":\"Max\",\"age\":30}";
+        Mockito.when(service.savePerson(Mockito.any(Person.class))).thenReturn(person);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/add")
+                .accept(MediaType.APPLICATION_JSON).content(mockPerson).contentType(MediaType.APPLICATION_JSON);
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+        assertEquals(mockPerson, result.getResponse().getContentAsString());
+        assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
 
     }
 
@@ -58,7 +77,5 @@ class PersonControllerTest {
     void updatePerson() {
     }
 
-    @Test
-    void getOnePerson() {
-    }
+
 }

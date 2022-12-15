@@ -25,10 +25,21 @@ public class PersonController {
         return service.getPeople();
     }
 
+    @GetMapping("get/{id}")
+    public ResponseEntity getOnePerson(@PathVariable String id){
+
+        if (service.getPersonById(id)==null){
+            //return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok("Person Not Found");
+        }else {
+            return ResponseEntity.ok(service.getPersonById(id));
+        }
+    }
+
     @PostMapping(value = "/add")
     public ResponseEntity addPerson(@RequestBody Person person){
         service.savePerson(person);
-        return ResponseEntity.ok("Person Added");
+        return ResponseEntity.ok(person);
     }
 
     @DeleteMapping(value = "/delete/{id}")
@@ -56,15 +67,6 @@ public class PersonController {
 
     }
 
-    @GetMapping("get/{id}")
-    public ResponseEntity getOnePerson(@PathVariable String id){
 
-        if (service.getPersonById(id)==null){
-            //return new ResponseEntity(HttpStatus.NOT_FOUND);
-            return ResponseEntity.ok("Person Not Found");
-        }else {
-            return ResponseEntity.ok(service.getPersonById(id));
-        }
-    }
 
 }
