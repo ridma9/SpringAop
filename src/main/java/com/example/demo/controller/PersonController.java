@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@RestController("/people")
 public class PersonController {
 
     private final PersonService service;
@@ -20,12 +20,12 @@ public class PersonController {
         this.service = service;
     }
 
-    @GetMapping("/get")
+    @GetMapping
     public List<Person> getAll(){
         return service.getPeople();
     }
 
-    @GetMapping("get/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity getOnePerson(@PathVariable String id){
 
         if (service.getPersonById(id)==null){
@@ -36,13 +36,13 @@ public class PersonController {
         }
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping()
     public ResponseEntity addPerson(@RequestBody Person person){
         service.savePerson(person);
         return ResponseEntity.ok(person);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity deletePerson(@PathVariable String id){
         if (service.deletePerson(id)){
             return ResponseEntity.ok("Deleted");
@@ -51,7 +51,7 @@ public class PersonController {
         }
     }
 
-    @PutMapping("update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity updatePerson(@PathVariable String id, @RequestBody Person person){
         Person person1 = service.getPersonById(id);
 
