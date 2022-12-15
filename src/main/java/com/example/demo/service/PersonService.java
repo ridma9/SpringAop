@@ -36,10 +36,6 @@ public class PersonService {
         }
     }
 
-    public void editPerson(Person person){
-
-    }
-
     public Person getPersonById(String id){
         Optional<Person> person = repo.findById(id);
 

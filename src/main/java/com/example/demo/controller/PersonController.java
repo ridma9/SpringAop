@@ -20,7 +20,6 @@ public class PersonController {
         this.service = service;
     }
 
-
     @GetMapping("/get")
     public List<Person> getAll(){
         return service.getPeople();
