@@ -61,7 +61,9 @@ class PersonControllerTest {
         String mockPerson = "{\"id\":\"4\",\"name\":\"Max\",\"age\":30}";
         Mockito.when(service.savePerson(Mockito.any(Person.class))).thenReturn(person);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/add")
-                .accept(MediaType.APPLICATION_JSON).content(mockPerson).contentType(MediaType.APPLICATION_JSON);
+                .accept(MediaType.APPLICATION_JSON)
+                .content(mockPerson)
+                .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
         assertEquals(mockPerson, result.getResponse().getContentAsString());
@@ -70,7 +72,11 @@ class PersonControllerTest {
     }
 
     @Test
-    void deletePerson() {
+    void deletePerson() throws Exception {
+        Mockito.when(service.deletePerson(Mockito.anyString())).thenReturn(true);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/delete/1");
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        assertEquals(HttpStatus.OK.value(),result.getResponse().getStatus());
     }
 
     @Test
