@@ -62,7 +62,7 @@ public class PersonController {
             person1.setAge(person.getAge());
             person1.setName(person.getName());
             service.savePerson(person1);
-            return ResponseEntity.ok("Person Updated");
+            return ResponseEntity.ok(person);
         }
 
     }

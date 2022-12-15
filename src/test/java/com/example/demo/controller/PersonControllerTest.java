@@ -80,7 +80,19 @@ class PersonControllerTest {
     }
 
     @Test
-    void updatePerson() {
+    void updatePerson() throws Exception {
+        Person person = new Person("1","Max",35);
+        String mockPerson = "{\"id\":\"1\",\"name\":\"Max\",\"age\":30}";
+        Mockito.when(service.getPersonById(Mockito.any())).thenReturn(person);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/update/\"1\"")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(mockPerson)
+                .contentType(MediaType.APPLICATION_JSON);
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+        assertEquals(mockPerson, result.getResponse().getContentAsString());
+        assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
+
     }
 
 
