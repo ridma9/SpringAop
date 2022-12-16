@@ -29,7 +29,7 @@ public class PersonService {
 
         Optional<Person> person = repo.findById(id);
 
-        if (person.isPresent()) {
+        if (person!=null) {
             repo.deleteById(id);
             return true;
         }else {

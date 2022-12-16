@@ -39,7 +39,7 @@ class PersonControllerTest {
     @Test
     void getAll() throws Exception {
         Mockito.when(service.getPeople()).thenReturn(people);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/get").accept(MediaType.APPLICATION_JSON);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/people").accept(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         String expected = "[{\"id\":\"1\",\"name\":\"John\",\"age\":25},{\"id\":\"2\",\"name\":\"Cal\",\"age\":20}]";
         assertEquals(expected,result.getResponse().getContentAsString());
@@ -49,7 +49,7 @@ class PersonControllerTest {
     void getOnePerson() throws Exception {
         Person person = people.get(0);
         Mockito.when(service.getPersonById(Mockito.anyString())).thenReturn(person);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/get/\"1\"").accept(MediaType.APPLICATION_JSON);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/people/\"1\"").accept(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         String expected = "{\"id\":\"1\",\"name\":\"John\",\"age\":25}";
         assertEquals(expected,result.getResponse().getContentAsString());
@@ -60,7 +60,7 @@ class PersonControllerTest {
         Person person = new Person("4","Max",30);
         String mockPerson = "{\"id\":\"4\",\"name\":\"Max\",\"age\":30}";
         Mockito.when(service.savePerson(Mockito.any(Person.class))).thenReturn(person);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/add")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/people")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(mockPerson)
                 .contentType(MediaType.APPLICATION_JSON);
@@ -74,7 +74,7 @@ class PersonControllerTest {
     @Test
     void deletePerson() throws Exception {
         Mockito.when(service.deletePerson(Mockito.anyString())).thenReturn(true);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/delete/1");
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/people/1");
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         assertEquals(HttpStatus.OK.value(),result.getResponse().getStatus());
     }
@@ -84,7 +84,7 @@ class PersonControllerTest {
         Person person = new Person("1","Max",35);
         String mockPerson = "{\"id\":\"1\",\"name\":\"Max\",\"age\":30}";
         Mockito.when(service.getPersonById(Mockito.any())).thenReturn(person);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/update/\"1\"")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/people/\"1\"")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(mockPerson)
                 .contentType(MediaType.APPLICATION_JSON);
