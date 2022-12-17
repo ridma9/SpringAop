@@ -1,3 +1,4 @@
 com\example\demo\controller\PersonDtoControllerTest.class
 com\example\demo\dto\PersonDtoTest.class
+com\example\demo\mapper\PersonMapperTest.class
 com\example\demo\service\PersonDtoServiceTest.class

@@ -23,7 +23,7 @@ public class PersonService {
     public List<PersonDto> getPeople(){
         List<PersonDto> people = new ArrayList<>();
         for (Person person:repo.findAll()) {
-            people.add(personMapper.entityToDtoMapper(Optional.ofNullable(person)));
+            people.add(personMapper.entityToDtoMapper(person));
         }
         return people;
     }
@@ -45,8 +45,12 @@ public class PersonService {
 
     public PersonDto getPersonById(String id){
         Optional<Person> person = repo.findById(id);
-        Optional<PersonDto> personDto = Optional.ofNullable(personMapper.entityToDtoMapper(person));
-        return personDto.orElse(null);
+        PersonDto personDto;
+        if (person.isPresent()) {
+            personDto   = personMapper.entityToDtoMapper(person.get());
+            return personDto;
+        }
+        return  null;
     }
 
 

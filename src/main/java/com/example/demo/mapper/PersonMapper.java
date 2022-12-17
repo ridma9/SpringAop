@@ -3,19 +3,26 @@ package com.example.demo.mapper;
 import com.example.demo.dto.PersonDto;
 import com.example.demo.entity.Person;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 @Service
 public class PersonMapper {
 
-    public PersonDto entityToDtoMapper(Optional<Person> person){
-        ModelMapper mapper = new ModelMapper();
+
+    private final ModelMapper mapper;
+
+    public PersonMapper(ModelMapper mapper) {
+        this.mapper = mapper;
+    }
+
+
+    public PersonDto entityToDtoMapper(Person person){
         return mapper.map(person, PersonDto.class);
     }
 
     public Person dtoToEntityMapper(PersonDto personDto){
-        ModelMapper mapper = new ModelMapper();
         return mapper.map(personDto,Person.class);
     }
 }

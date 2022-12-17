@@ -1,7 +1,7 @@
-H:\Grub Tech Internship\SpringApp\src\main\java\com\example\demo\repo\PersonRepo.java
-H:\Grub Tech Internship\SpringApp\src\main\java\com\example\demo\DemoApplication.java
-H:\Grub Tech Internship\SpringApp\src\main\java\com\example\demo\dto\PersonDto.java
-H:\Grub Tech Internship\SpringApp\src\main\java\com\example\demo\mapper\PersonMapper.java
-H:\Grub Tech Internship\SpringApp\src\main\java\com\example\demo\service\PersonService.java
-H:\Grub Tech Internship\SpringApp\src\main\java\com\example\demo\controller\PersonController.java
-H:\Grub Tech Internship\SpringApp\src\main\java\com\example\demo\entity\Person.java
+H:\Added DTO and Mapper\SpringApp\src\main\java\com\example\demo\service\PersonService.java
+H:\Added DTO and Mapper\SpringApp\src\main\java\com\example\demo\DemoApplication.java
+H:\Added DTO and Mapper\SpringApp\src\main\java\com\example\demo\mapper\PersonMapper.java
+H:\Added DTO and Mapper\SpringApp\src\main\java\com\example\demo\repo\PersonRepo.java
+H:\Added DTO and Mapper\SpringApp\src\main\java\com\example\demo\controller\PersonController.java
+H:\Added DTO and Mapper\SpringApp\src\main\java\com\example\demo\dto\PersonDto.java
+H:\Added DTO and Mapper\SpringApp\src\main\java\com\example\demo\entity\Person.java

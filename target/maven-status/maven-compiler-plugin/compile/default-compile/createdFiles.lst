@@ -3,5 +3,6 @@ com\example\demo\entity\Person.class
 com\example\demo\repo\PersonRepo.class
 com\example\demo\controller\PersonController.class
 com\example\demo\mapper\PersonMapper.class
+com\example\demo\DemoApplication$AppConfiguration.class
 com\example\demo\dto\PersonDto.class
 com\example\demo\service\PersonService.class
