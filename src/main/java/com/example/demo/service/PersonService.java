@@ -1,9 +1,12 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.PersonDto;
 import com.example.demo.entity.Person;
+import com.example.demo.mapper.PersonMapper;
 import com.example.demo.repo.PersonRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,40 +14,39 @@ import java.util.Optional;
 public class PersonService {
 
     private final PersonRepo repo;
-
-    public PersonService(PersonRepo repo) {
+    private final PersonMapper personMapper;
+    public PersonService(PersonRepo repo, PersonMapper personMapper) {
         this.repo = repo;
+        this.personMapper = personMapper;
     }
 
-    public List<Person> getPeople(){
-        return repo.findAll();
+    public List<PersonDto> getPeople(){
+        List<PersonDto> people = new ArrayList<>();
+        for (Person person:repo.findAll()) {
+            people.add(personMapper.entityToDtoMapper(Optional.ofNullable(person)));
+        }
+        return people;
     }
 
-    public Person savePerson(Person person){
+    public PersonDto savePerson(PersonDto personDto){
+        Person person = personMapper.dtoToEntityMapper(personDto);
         repo.save(person);
-        return person;
+        return personDto;
     }
 
     public boolean deletePerson(String id){
-
         Optional<Person> person = repo.findById(id);
-
-        if (person!=null) {
+        if (person.isPresent() && person.get().getId()!=null) {
             repo.deleteById(id);
             return true;
-        }else {
-            return false;
         }
+        return false;
     }
 
-    public Person getPersonById(String id){
+    public PersonDto getPersonById(String id){
         Optional<Person> person = repo.findById(id);
-
-        if (person.isPresent()) {
-            return person.get();
-        }else {
-            return null;
-        }
+        Optional<PersonDto> personDto = Optional.ofNullable(personMapper.entityToDtoMapper(person));
+        return personDto.orElse(null);
     }
 
 
