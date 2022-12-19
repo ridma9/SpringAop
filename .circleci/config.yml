@@ -1,10 +1,9 @@
-version: '2.1'
+version: 2.1
 
 workflows:
-  test-deply:
+  build-test-and-deploy:
     jobs:
-      -test
-
+      - test
 jobs:
   test:
     docker:
